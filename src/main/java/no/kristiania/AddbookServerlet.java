@@ -11,11 +11,15 @@ import java.io.IOException;
 
 public class AddbookServerlet extends HttpServlet {
     private static final Logger logger =  LoggerFactory.getLogger(AddbookServerlet.class);
+    private final BookRepostory  bookrepostory;
+
+    public AddbookServerlet(BookRepostory bookrepostory) {
+        this.bookrepostory = bookrepostory;
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doPost(req, resp);
-
 
         Book book = new Book();
         book.setTitle(req.getParameter("booktitle"));
