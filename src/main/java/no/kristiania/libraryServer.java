@@ -1,6 +1,7 @@
 
 import no.kristiania.AddbookServerlet;
 import no.kristiania.BookRepostory;
+import no.kristiania.getListOfbookServerlet;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.webapp.WebAppContext;
@@ -12,9 +13,11 @@ public class libraryServer {
 private static Logger logger= LoggerFactory.getLogger(libraryServer.class);
     private static   final Server server = new Server(9080);
     private BookRepostory bookrepostory = new BookRepostory();
+
     public void start() throws Exception {
       var webapp = new WebAppContext(Resource.newClassPathResource("/webapp"),"/");
         webapp.addServlet(new ServletHolder(new AddbookServerlet(bookrepostory)),"/api/addbook");
+        webapp.addServlet(new ServletHolder(new getListOfbookServerlet()),"/api/books/*");
         server.setHandler(webapp);
         server.start();
         logger.info("started on {}", server.getURI());
